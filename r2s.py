@@ -110,7 +110,10 @@ def select_album(original_artist, original_album, albums, current_position, tota
         click.secho(u'\nFound: "{0}"\n'.format(album['name']), fg='green')
         print imgcat(album['images'][0]['url'])
 
-        action = None
+        # force every match to add to library
+        # this only sucks if it can't find a match as if a search turns up anything it will get approved
+        # would be best to change the workflow to not set action to 'y' if a match is found after a manual "re-search"
+        action = 'y'
         while action not in ('y', 'n', 's'):
             actions = '/'.join(under_first(s) for s in ('yes', 'next', 'skip'))
             action = click.prompt('\nAdd to collection? ' + actions, default='y')
